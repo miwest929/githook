@@ -6,6 +6,7 @@ Gem::Specification.new do |s|
   s.summary = "A Ruby DSL for handling Github webhook requests"
   s.authors = ['Michael West']
   s.files = `git ls-files`.split("\n")
+  s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths = ['lib']
 
   s.add_dependency('octokit')

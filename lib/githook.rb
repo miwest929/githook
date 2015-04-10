@@ -1,8 +1,10 @@
 module Githook
   @registry = {}
 
-  def self.on(event_type, event_action = nil, &handler)
-    event_key = event_action ? "#{event_type}-#{event_action}" : event_type
+  ANY_ACTION = []
+
+  def self.on(event_type, event_action = ANY_ACTION, &handler)
+    event_key = event_action != ANY_ACTION ? "#{event_type}-#{event_action}" : event_type
 
     @registry[event_key] = handler
   end

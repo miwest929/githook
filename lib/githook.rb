@@ -14,7 +14,7 @@ module Githook
       event_keys = if event_action
         event_action.map {|ea| "#{event_type}-#{ea}"}
       else
-       [event_type]
+        [event_type]
       end
 
       event_keys.each {|key| @registry[key] = handler}
@@ -23,7 +23,7 @@ module Githook
     def process(body)
       event_info = github_event(body)
 
-      handler = (@registry["#{event_type}-#{event_action}"] || @registry[event_type])
+      handler = (@registry["#{event_info['event']}-#{event_info['action']}"] || @registry[event_info['event']])
 
       handler.call if handler
     end

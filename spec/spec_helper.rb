@@ -8,9 +8,9 @@ require 'githook'
 
 Bundler.setup
 
-webhook_requests = {}
+WEBHOOK_REQUESTS = {}
 Dir['spec/webhooks/*'].each do |wh|
   file = File.read(wh)
   puts wh
-  webhook_requests[wh] = JSON.parse(file)
+  WEBHOOK_REQUESTS[wh] = JSON.parse(file)
 end

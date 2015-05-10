@@ -8,7 +8,7 @@ describe Githook do
     it 'invokes the handler that matches the event type and action' do
       mybot.on('pull_request', ['opened'], &handler)
       expect(handler).to receive(:call)
-      mybot.process(webhook_requests['spec/webhooks/opened_pr.json'])
+      mybot.process(WEBHOOK_REQUESTS['spec/webhooks/opened_pr.json'])
     end
   end
 

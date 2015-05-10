@@ -11,6 +11,5 @@ Bundler.setup
 WEBHOOK_REQUESTS = {}
 Dir['spec/webhooks/*'].each do |wh|
   file = File.read(wh)
-  puts wh
   WEBHOOK_REQUESTS[wh] = JSON.parse(file)
 end

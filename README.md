@@ -13,7 +13,8 @@ A simple Ruby DSL for specifying your very own Github bot. Github webhooks are t
 ```ruby
 # When a pull_request event is received with action that is either 'opened' or 'reopened'
 # then invoke block
-Githook.on("pull_request", ["opened", "reopened"]) do |pr|
+mybot = Githook::Bot.new
+mybot.on("pull_request", ["opened", "reopened"]) do |pr|
   if pr.description.empty?
     pr.comment("Hey, add a description! You think we're mind readers!?")
   end

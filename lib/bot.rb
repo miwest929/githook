@@ -1,6 +1,11 @@
 module Githook
   class Bot
-    def initialize
+    @access_token = nil
+
+    def initialize(configs = {})
+      @access_token = configs[:access_token]
+      raise "No Github access token was provided. Your bot will be unable to perform Github actions on your behalf."
+
       @registry = {}
     end
 

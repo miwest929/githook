@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Githook do
+  context 'initializing your Githook::Bot' do
+    it "raises error if no 'access_token' is provided" do
+      expect{ Githook::Bot.new }.to raise_error(StandardError)
+    end
+  end
+
   context "processing Github events in 'process'" do
     let(:mybot) { Githook::Bot.new(access_token: 'xxxxxxfakexxxx') }
     let(:handler) { Proc.new {|pr| true} }

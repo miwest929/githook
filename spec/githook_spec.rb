@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Githook do
   context "processing Github events in 'process'" do
-    let(:mybot) { Githook::Bot.new }
+    let(:mybot) { Githook::Bot.new(access_token: 'xxxxxxfakexxxx') }
     let(:handler) { Proc.new {|pr| true} }
 
     it 'invokes the handler that matches the event type and action' do
@@ -13,7 +13,7 @@ describe Githook do
   end
 
   context "registering new webhook action by invoking 'on'" do
-    let(:mybot) { Githook::Bot.new }
+    let(:mybot) { Githook::Bot.new(access_token: 'xxxxxxfakexxxx') }
 
     it "successfully registers appropriate handler for the event#action specified" do
       handler = Proc.new {|pr| true}

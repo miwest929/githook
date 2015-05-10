@@ -2,18 +2,14 @@
 
 A simple Ruby DSL for specifying your very own Github bot. Github webhooks are the events that the bot must react to.
 
-## Configuration
-
-```ruby
-  Githook.config(access_token: <your-access-token>)
-```
-
 ## Example
 
 ```ruby
 # When a pull_request event is received with action that is either 'opened' or 'reopened'
 # then invoke block
-mybot = Githook::Bot.new
+
+# You must provide an 'access_token' so that your bot is authorized to perform Github actions to your repos
+mybot = Githook::Bot.new(access_token: <your-access-token>)
 mybot.on("pull_request", ["opened", "reopened"]) do |pr|
   if pr.description.empty?
     pr.comment("Hey, add a description! You think we're mind readers!?")

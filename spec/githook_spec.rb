@@ -16,6 +16,17 @@ describe Githook do
       expect(handler).to receive(:call)
       mybot.process(WEBHOOK_REQUESTS['spec/webhooks/opened_pr.json'])
     end
+
+    it 'passes an appropriate object to the invoked block' do
+      complex_handler = Proc.new do |pr|
+        unless pr.class == Githook::PullRequest
+          raise "pr is not of type Githook::PullRequest"
+        end
+      end
+
+      mybot.on('pull_request', ['opened'], &complex_handler)
+      expect{ mybot.process(WEBHOOK_REQUESTS['spec/webhooks/opened_pr.json']) }.to_not raise_error
+    end
   end
 
   context "registering new webhook action by invoking 'on'" do

@@ -28,7 +28,9 @@ module Githook
 
       handler = (@registry["#{event_info['event']}-#{event_info['action']}"] || @registry[event_info['event']])
 
-      handler.call if handler
+      pr_info = body['pull_request']
+      pr = Githook::PullRequest.new(pr_info['title'], pr_info['body'], pr_info['head']['repo']['full_name'], pr_info['user']['login'])
+      handler.call(pr) if handler
     end
 
   private

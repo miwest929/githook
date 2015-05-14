@@ -1,3 +1,4 @@
+require 'octokit'
 require 'bot'
 require 'event_objects/pull_request'
 

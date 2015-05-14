@@ -33,7 +33,7 @@ module Githook
       handler = (@registry["#{event_info['event']}-#{event_info['action']}"] || @registry[event_info['event']])
 
       pr_info = body['pull_request']
-      pr = Githook::PullRequest.new(pr_info['title'], pr_info['body'], pr_info['head']['repo']['full_name'], body['number'], pr_info['user']['login'], bot.github_client)
+      pr = Githook::PullRequest.new(pr_info['title'], pr_info['body'], pr_info['head']['repo']['full_name'], body['number'], pr_info['user']['login'], self.github_client)
       handler.call(pr) if handler
     end
 

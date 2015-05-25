@@ -4,6 +4,8 @@ module Githook
 
     def initialize(configs = {})
       access_token = configs[:access_token]
+      @logger = configs[:logger] || Logger.new(STDOUT)
+
       raise "No Github access token was provided. Your bot will be unable to perform Github actions on your behalf." unless access_token
 
       @github_client = Octokit::Client.new({access_token:
@@ -32,8 +34,9 @@ module Githook
 
       handler = (@registry["#{event_info['event']}-#{event_info['action']}"] || @registry[event_info['event']])
 
-      pr_info = body['pull_request']
-      pr = Githook::PullRequest.new(pr_info['title'], pr_info['body'], pr_info['head']['repo']['full_name'], body['number'], pr_info['user']['login'], self.github_client)
+      pr_info = body['pull_request'] || body['issue']
+      repo_name = pr_info['head'] ? pr_info['head']['repo']['full_name'] : nil
+      pr = Githook::PullRequest.new(pr_info['title'], pr_info['body'], repo_name, body['number'], pr_info['user']['login'], self.github_client)
       handler.call(pr) if handler
     end
 
@@ -45,6 +48,7 @@ module Githook
 
       event = (body.keys & events).first # should only ever be one
 
+      @logger.info("Detected the following GitHub event: action: #{body['action']} event: #{event}")
       {'action' => body['action'], 'event' => event}
     end
   end

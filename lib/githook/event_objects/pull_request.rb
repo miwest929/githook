@@ -12,7 +12,9 @@ module Githook
     end
 
     def comment(message)
-      client.post("#{github_pr_url}/comments", {
+      puts "Made comment to #{github_pr_url} with message '#{message}'"
+
+      @client.post("#{github_pr_url}/comments", {
         body: message
       })
     end

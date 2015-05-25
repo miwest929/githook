@@ -19,14 +19,29 @@ module Githook
       @registry
     end
 
-    def on(event_type, event_action = nil, &handler)
-      event_keys = if event_action
-        event_action.map {|ea| "#{event_type}-#{ea}"}
+    def perform(&handler)
+      event_keys = if @actions.empty?
+        @actions.map {|a| "#{@event_type}-#{a}"}
       else
-        [event_type]
+        [@event_type]
       end
 
       event_keys.each {|key| @registry[key] = handler}
+    end
+
+    @actions = []
+    def when(event_action)
+      @actions << event_action
+
+      self
+    end
+
+    @event_type = nil
+    def on(event_type)
+      @event_type = event_type
+      @actions = []
+
+      self
     end
 
     def process(body)

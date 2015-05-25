@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version = Githook::VERSION
   s.summary = "A Ruby DSL for handling Github webhook requests"
   s.authors = ['Michael West']
-  s.files = `git ls-files`.split("\n")
+  s.files = Dir.glob("lib/**/*.rb")
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths = ['lib']
 

@@ -1,8 +1,3 @@
 require 'octokit'
-require 'bot'
-require 'event_objects/pull_request'
-
-module Githook
-  ANY_ACTION = []
-end
-
+require 'githook/bot'
+require 'githook/event_objects/pull_request'

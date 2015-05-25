@@ -10,7 +10,7 @@ A simple Ruby DSL for specifying your very own Github bot. Github webhooks are t
 
 # You must provide an 'access_token' so that your bot is authorized to perform Github actions to your repos
 mybot = Githook::Bot.new(access_token: <your-access-token>)
-mybot.on("pull_request", ["opened", "reopened"]) do |pr|
+mybot.on("pull_request").when("opened").when("reopened").perform do |pr|
   if pr.description.empty?
     pr.comment("Hey, add a description! You think we're mind readers!?")
   end
@@ -22,6 +22,8 @@ mybot.on("pull_request", ["opened", "reopened"]) do |pr|
   pr.add_label("needs-work")
 end
 
-# Start server that will listen for requests made to '/payload'
-Githook.listen("/payload")
+# Inside a HTTP request handler add the following call
+push = JSON.parse(request.body.read)
+
+mybot.process(push)
 ```

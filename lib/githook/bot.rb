@@ -1,3 +1,5 @@
+require 'logger'
+
 module Githook
   class Bot
     attr_accessor :github_client
@@ -20,7 +22,7 @@ module Githook
     end
 
     def perform(&handler)
-      event_keys = if @actions.empty?
+      event_keys = if !@actions.empty?
         @actions.map {|a| "#{@event_type}-#{a}"}
       else
         [@event_type]

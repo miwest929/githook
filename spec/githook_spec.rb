@@ -12,7 +12,7 @@ describe Githook do
     let(:handler) { Proc.new {|pr| true} }
 
     it 'invokes the handler that matches the event type and action' do
-      mybot.on('pull_request', ['opened'], &handler)
+      mybot.on('pull_request').when('opened').perform(&handler)
       expect(handler).to receive(:call)
       mybot.process(WEBHOOK_REQUESTS['spec/webhooks/opened_pr.json'])
     end
@@ -24,7 +24,7 @@ describe Githook do
         end
       end
 
-      mybot.on('pull_request', ['opened'], &complex_handler)
+      mybot.on('pull_request').when('opened').perform(&complex_handler)
       expect{ mybot.process(WEBHOOK_REQUESTS['spec/webhooks/opened_pr.json']) }.to_not raise_error
     end
   end
@@ -34,7 +34,7 @@ describe Githook do
 
     it "successfully registers appropriate handler for the event#action specified" do
       handler = Proc.new {|pr| true}
-      mybot.on('pull_request', ['opened'], &handler)
+      mybot.on('pull_request').when('opened').perform(&handler)
 
       expect(mybot.registry['pull_request-opened']).to eq(handler)
       expect(mybot.registry['pull_request']).to eq(nil)
@@ -42,14 +42,14 @@ describe Githook do
 
     it "registers handler only for the event if no action is specified" do
       handler = Proc.new {|pr| true}
-      mybot.on('pull_request', &handler)
+      mybot.on('pull_request').perform(&handler)
 
       expect(mybot.registry['pull_request']).to eq(handler)
     end
 
     it "registers handler only for each event#action  specified" do
       handler = Proc.new {|pr| true}
-      mybot.on('pull_request', ['opened', 'reopened'], &handler)
+      mybot.on('pull_request').when('opened').when('reopened').perform(&handler)
 
       expect(mybot.registry['pull_request-opened']).to eq(handler)
       expect(mybot.registry['pull_request-reopened']).to eq(handler)

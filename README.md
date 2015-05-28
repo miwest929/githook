@@ -1,6 +1,10 @@
 # Githook
 
-A simple Ruby DSL for specifying your very own Github bot. Github webhooks are the events that the bot must react to.
+A simple Ruby DSL for describing a Github bot. Github webhooks are the events that the bot must react to.
+
+## Installation
+First, you need to install this gem. You need to have Ruby and Rubygems installed.
+  $ gem install githook
 
 ## Example
 

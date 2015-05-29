@@ -14,7 +14,7 @@ describe Githook do
     it 'invokes the handler that matches the event type and action' do
       mybot.on('pull_request').when('opened').perform(&handler)
       expect(handler).to receive(:call)
-      mybot.process(WEBHOOK_REQUESTS['spec/webhooks/opened_pr.json'])
+      mybot.process(WEBHOOK_REQUESTS['spec/webhooks/opened_pr.json'], 'pull_request')
     end
 
     it 'passes an appropriate object to the invoked block' do
@@ -25,7 +25,7 @@ describe Githook do
       end
 
       mybot.on('pull_request').when('opened').perform(&complex_handler)
-      expect{ mybot.process(WEBHOOK_REQUESTS['spec/webhooks/opened_pr.json']) }.to_not raise_error
+      expect{ mybot.process(WEBHOOK_REQUESTS['spec/webhooks/opened_pr.json'], 'pull_request') }.to_not raise_error
     end
   end
 
@@ -38,6 +38,11 @@ describe Githook do
 
       expect(mybot.registry['pull_request-opened']).to eq(handler)
       expect(mybot.registry['pull_request']).to eq(nil)
+    end
+
+    it 'raises an error if registering an invalid Github event' do
+      handler = Proc.new {|pr| true}
+      expect{ mybot.on('crayons').when('opened').perform(&handler) }.to raise_error
     end
 
     it "registers handler only for the event if no action is specified" do

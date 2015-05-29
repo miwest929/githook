@@ -4,6 +4,9 @@ module Githook
   class Bot
     attr_accessor :github_client
 
+    # TODO: Grow list will grow in future changes.
+    SUPPORTED_ACTIONS = %w(issue_comment issues pull_request pull_request_review_comment)
+
     def initialize(configs = {})
       access_token = configs[:access_token]
       @logger = configs[:logger] || Logger.new(STDOUT)
@@ -33,6 +36,7 @@ module Githook
 
     @actions = []
     def when(event_action)
+
       @actions << event_action
 
       self
@@ -40,16 +44,24 @@ module Githook
 
     @event_type = nil
     def on(event_type)
+      raise "Github event '#{event}' is not supported by Githook" unless SUPPORTED_ACTIONS.include?(event_type)
+
       @event_type = event_type
       @actions = []
 
       self
     end
 
-    def process(body)
-      event_info = github_event(body)
+    def process(body, event)
+      unless SUPPORTED_ACTIONS.include?(event)
+        @logger.info("Github event '#{event}' is not supported by Githook")
+        return
+      end
 
-      handler = (@registry["#{event_info['event']}-#{event_info['action']}"] || @registry[event_info['event']])
+      action = body['action']
+      @logger.info("Detected the following GitHub event: action: #{action} event: #{event}")
+
+      handler = (@registry["#{event}-#{action}"] || @registry[event])
 
       if handler
         pr_info = body['pull_request'] || body['issue']
@@ -57,18 +69,6 @@ module Githook
         pr = Githook::PullRequest.new(pr_info['title'], pr_info['body'], repo_name, body['number'], pr_info['user']['login'], self.github_client)
         handler.call(pr)
       end
-    end
-
-  private
-    def github_event(body)
-      # Normally the GitHub event is present in the X-GitHub-Event headers but sometimes
-      # that header is absent in which case we need to brute force it.
-      events = %w(commit_comment create delete deployment deployment_status fork gollum issue_comment issue pull_request)
-
-      event = (body.keys & events).first # should only ever be one
-
-      @logger.info("Detected the following GitHub event: action: #{body['action']} event: #{event}")
-      {'action' => body['action'], 'event' => event}
     end
   end
 end

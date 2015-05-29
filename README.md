@@ -26,7 +26,8 @@ mybot.on("pull_request").when("opened").when("reopened").perform do |pr|
   pr.add_label("needs-work")
 end
 
-# Start the bot server
+# This will launch the bot server. In this example, /payload is the route that handles
+# Github webhook requests. When no route is specified then it defaults to the root route.
 Githook::Server.new(mybot).listen('/payload')
 ```
 

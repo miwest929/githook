@@ -26,8 +26,6 @@ mybot.on("pull_request").when("opened").when("reopened").perform do |pr|
   pr.add_label("needs-work")
 end
 
-# Inside a HTTP request handler add the following call
-push = JSON.parse(request.body.read)
-
-mybot.process(push)
+# Start the bot server
+Githook::Server.new(mybot).listen('/payload')
 ```

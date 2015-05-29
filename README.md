@@ -32,6 +32,6 @@ Githook::Server.new(mybot).listen('/payload')
 
 ## How to configure your bot to receive web hooks from Github
 
-![Settings -> Webhooks & Services](./imgs/settings-screenshot.png =x400)
+![Settings -> Webhook & Services](imgs/settings-screenshot.png)
 
-![Add Webhook](./imgs/add-webhook-screenshot.png =x400)
+![Add Webhook](./imgs/add-webhook-screenshot.png)

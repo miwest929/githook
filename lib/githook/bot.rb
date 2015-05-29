@@ -13,10 +13,7 @@ module Githook
 
       raise "No Github access token was provided. Your bot will be unable to perform Github actions on your behalf." unless access_token
 
-      @github_client = Octokit::Client.new({access_token:
-        access_token
-      })
-
+      @github_client = Octokit::Client.new(access_token: access_token)
       @registry = {}
     end
 

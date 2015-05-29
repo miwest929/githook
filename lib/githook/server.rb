@@ -1,5 +1,4 @@
 require 'rack'
-require 'byebug'
 
 module Githook
   class Server
@@ -26,7 +25,6 @@ module Githook
 
       bot_server = Rack::Server.new(
         app: app,
-#        daemonize: true,
         server: 'webrick',
         Port: 3002
       )

@@ -8,11 +8,19 @@ First, you need to install this gem. You need to have Ruby and Rubygems installe
 
 ## What Github events and actions are supported?
 
+* [issue_comment](https://developer.github.com/v3/activity/events/types/#issuecommentevent) - Triggered when an issue comment.  
+   **Supported actions:** `created`
+* [issues](https://developer.github.com/v3/activity/events/types/#issuesevent) - Triggered when an issue is assigned, unassigned, labeled, unlabeled, opened, closed, or reopened.  
+   **Supported actions:** `assigned, unassigned, labeled, unlabeled, opened, closed, reopened`
+* [pull_request](https://developer.github.com/v3/activity/events/types/#pullrequestevent) - Triggered when a pull request is assigned, unassigned, labeled, unlabeled, opened, closed, reopened, or synchronized.  
+  **Supported actions:** `assigned, unassigned, labeled, unlabeled, opened, closed, reopened, synchronize`
+* [pull_request_review_comment](https://developer.github.com/v3/activity/events/types/#pullrequestreviewcommentevent) - Triggered when a comment is created on a portion of the unified diff of a pull request.  
+  **Supported actions:** `created`
 
 ## Example
 
 ```ruby
-requite 'githook'
+require 'githook'
 
 # You must provide an 'access_token' so that your bot is authorized to perform Github actions to your repos
 mybot = Githook::Bot.new(access_token: <your-access-token>)
@@ -27,8 +35,6 @@ mybot.on("pull_request").when("opened").when("reopened").perform do |pr|
   if pr.title.contains?("cheese")
     pr.comment("Why is there cheese in the title?")
   end
-  
-  pr.add_label("needs-work")
 end
 
 # This will launch the bot server. In this example, /payload is the route that handles

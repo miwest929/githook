@@ -63,7 +63,14 @@ module Githook
       if handler
         pr_info = body['pull_request'] || body['issue']
         repo_name = pr_info['head'] ? pr_info['head']['repo']['full_name'] : nil
-        pr = Githook::PullRequest.new(pr_info['title'], pr_info['body'], repo_name, body['number'], pr_info['user']['login'], self.github_client)
+        assignee = pr_info['assignee'] ? pr_info['assignee']['login'] : nil
+
+        pr = Githook::PullRequest.new(
+          pr_info['title'], pr_info['body'], repo_name, pr_info['number'],
+          pr_info['user']['login'], assignee, pr_info['state'],
+          self.github_client
+        )
+
         handler.call(pr)
       end
     end

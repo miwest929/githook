@@ -1,13 +1,15 @@
 module Githook
   class PullRequest
-    attr_accessor :title, :description, :repo, :author
+    attr_accessor :title, :description, :repo, :author, :assignee, :state, :number
 
-    def initialize(title, description, full_repo_name, number, author, client)
+    def initialize(title, description, full_repo_name, number, author, assignee, state, client)
       @title = title
       @description = description
       @number = number
       @repo = full_repo_name
       @author = author
+      @assignee = assignee
+      @state = state
       @client = client
     end
 

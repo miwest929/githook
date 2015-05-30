@@ -14,7 +14,7 @@ First, you need to install this gem. You need to have Ruby and Rubygems installe
    **Supported actions:** `created`
 * [issues](https://developer.github.com/v3/activity/events/types/#issuesevent) - Triggered when an issue is assigned, unassigned, labeled, unlabeled, opened, closed, or reopened.  
    **Supported actions:** `assigned, unassigned, labeled, unlabeled, opened, closed, reopened`
-* [pull_request](https://developer.github.com/v3/activity/events/types/#pullrequestevent) - Triggered when a pull request is assigned, unassigned, labeled, unlabeled, opened, closed, reopened, or synchronized.  
+* [pull_request](https://developer.github.com/v3/activity/events/types/#pullrequestevent) - Triggered when a pull request is assigned, unassigned, labeled, unlabeled, opened, closed, reopened, or synchronized (a new push to the branch that the pull request is tracking).  
   **Supported actions:** `assigned, unassigned, labeled, unlabeled, opened, closed, reopened, synchronize`
 * [pull_request_review_comment](https://developer.github.com/v3/activity/events/types/#pullrequestreviewcommentevent) - Triggered when a comment is created on a portion of the unified diff of a pull request.  
   **Supported actions:** `created`

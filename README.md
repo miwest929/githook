@@ -2,7 +2,8 @@
 
 A simple Ruby DSL for describing a Github bot. Github webhooks are the events that the bot must react to.
 
-> NOTE: This gem is under heavy development. It's quite possible there are some bugs. Do not panic if you run into a bug please > open an issue for it. Pull requests are always welcomed!
+> NOTE: This gem is under heavy development. It's quite possible there are some bugs. If you discover a bug do not panic.
+> Simply open an issue for it and one of the contributers will fix it in no time. Also, Pull requests are always welcomed!
 
 ## Installation
 First, you need to install this gem. You need to have Ruby and Rubygems installed.

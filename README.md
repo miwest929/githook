@@ -1,5 +1,7 @@
 # Githook
 
+[![Gem Version](https://badge.fury.io/rb/githook.svg)][gem]
+
 A simple Ruby DSL for describing a Github bot. Github webhooks are the events that the bot must react to.
 
 > NOTE: This gem is under heavy development. It's quite possible there are some bugs. If you discover a bug do not panic.
